@@ -12,10 +12,6 @@ import (
 	"time"
 )
 
-var client = &http.Client{
-	Timeout: 1 * time.Minute,
-}
-
 type Payload struct {
 	Message string `json:"message"`
 	Content string `json:"content"`
@@ -42,6 +38,10 @@ func Upload(filePath string) (url string, err error) {
 		return
 	}
 	req.Header.Add("Authorization", fmt.Sprintf("token %s", Token))
+
+	var client = &http.Client{
+		Timeout: 1 * time.Minute,
+	}
 	resp, err := client.Do(req)
 	if err != nil {
 		return
